@@ -2012,12 +2012,14 @@ source = { virtual = "." }
 dependencies = [
     { name = "pydantic-ai" },
     { name = "python-dotenv" },
+    { name = "temporalio" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "pydantic-ai", specifier = ">=1.66.0" },
     { name = "python-dotenv", specifier = ">=1.2.2" },
+    { name = "temporalio", specifier = ">=1.20.0" },
 ]
 
 [[package]]

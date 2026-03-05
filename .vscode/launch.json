@@ -8,6 +8,72 @@
       "program": "main.py",
       "console": "integratedTerminal",
       "justMyCode": false
+    },
+    {
+      "name": "Temporal: Worker + Workflow (等待审批)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "test_temporal_interrupt.py",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Temporal: 发送审批 (通过)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "test_temporal_signal.py",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Temporal: 发送审批 (拒绝)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "test_temporal_signal.py",
+      "args": ["reject"],
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Temporal: 基础示例",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "test_temporal.py",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Interrupt: 发起方 (等待审核)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "test_interrupt_demo.py",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Interrupt: 审核通过",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "test_interrupt_resume.py",
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Interrupt: 审核拒绝",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "test_interrupt_resume.py",
+      "args": ["reject"],
+      "console": "integratedTerminal",
+      "justMyCode": false
+    },
+    {
+      "name": "Eval: 评估",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "eval.py",
+      "console": "integratedTerminal",
+      "justMyCode": false
     }
   ]
 }
