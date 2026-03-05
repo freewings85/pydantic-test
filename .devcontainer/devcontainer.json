@@ -1,0 +1,26 @@
+{
+  "name": "pydantic-test",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "features": {
+    "ghcr.io/devcontainers-extra/features/uv:1": {}
+  },
+  "postCreateCommand": "uv sync",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": ".venv/bin/python"
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.debugpy"
+      ]
+    }
+  },
+  "forwardPorts": [],
+  "remoteEnv": {
+    "AZURE_OPENAI_ENDPOINT": "${localEnv:AZURE_OPENAI_ENDPOINT}",
+    "AZURE_OPENAI_API_KEY": "${localEnv:AZURE_OPENAI_API_KEY}",
+    "AZURE_API_VERSION": "${localEnv:AZURE_API_VERSION}",
+    "AZURE_DEPLOYMENT_NAME": "${localEnv:AZURE_DEPLOYMENT_NAME}"
+  }
+}

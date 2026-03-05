@@ -1,0 +1,48 @@
+services:
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    volumes:
+      - ./otel-config/otel-collector.yml:/etc/otelcol-contrib/config.yaml
+    ports:
+      - "4317:4317"
+      - "4318:4318"
+    depends_on:
+      - tempo
+      - loki
+
+  tempo:
+    image: grafana/tempo:2.7.2
+    volumes:
+      - ./otel-config/tempo.yml:/etc/tempo.yaml
+      - tempo-data:/var/tempo
+    ports:
+      - "3200:3200"
+    command: ["-config.file=/etc/tempo.yaml"]
+
+  loki:
+    image: grafana/loki:latest
+    user: "0"
+    volumes:
+      - ./otel-config/loki.yml:/etc/loki/local-config.yaml
+      - loki-data:/var/loki
+    command: ["-config.file=/etc/loki/local-config.yaml"]
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./otel-config/grafana-datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+      - grafana-data:/var/lib/grafana
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+    depends_on:
+      - tempo
+      - loki
+
+volumes:
+  tempo-data:
+  loki-data:
+  grafana-data:
