@@ -2,6 +2,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Python Debugger: Current File",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal"
+    },
+    {
       "name": "Python: main.py",
       "type": "debugpy",
       "request": "launch",
@@ -30,7 +37,9 @@
       "type": "debugpy",
       "request": "launch",
       "program": "test_temporal_signal.py",
-      "args": ["reject"],
+      "args": [
+        "reject"
+      ],
       "console": "integratedTerminal",
       "justMyCode": false
     },
@@ -63,7 +72,9 @@
       "type": "debugpy",
       "request": "launch",
       "program": "test_interrupt_resume.py",
-      "args": ["reject"],
+      "args": [
+        "reject"
+      ],
       "console": "integratedTerminal",
       "justMyCode": false
     },
@@ -74,6 +85,6 @@
       "program": "eval.py",
       "console": "integratedTerminal",
       "justMyCode": false
-    }
+    },
   ]
 }
