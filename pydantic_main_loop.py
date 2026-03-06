@@ -10,8 +10,11 @@ import asyncio
 import os
 from dataclasses import dataclass, field
 from dotenv import load_dotenv
+from typing import Callable
 from pydantic_ai import Agent, RunContext, Tool
 from pydantic_ai.agent import ModelRequestNode, CallToolsNode
+from pydantic_ai.messages import ModelMessage
+from pydantic_ai.models import Model
 from pydantic_ai.models.openai import OpenAIChatModel
 from pydantic_ai.providers.openai import OpenAIProvider
 from pydantic_ai.toolsets._dynamic import DynamicToolset
@@ -25,7 +28,8 @@ load_dotenv()
 # ---- 1. Deps：依赖对象，tool 可修改，eval 可 mock ----
 
 # 默认 tool 实现
-DEFAULT_TOOL_MAP: dict[str, callable] = {}  # 在 tool 函数定义后填充
+ToolFunc = Callable[..., str]  # tool 函数类型
+DEFAULT_TOOL_MAP: dict[str, ToolFunc] = {}  # 在 tool 函数定义后填充
 
 
 @dataclass
@@ -34,7 +38,7 @@ class AgentDeps:
     user_id: str = "anonymous"
     available_tools: list[str] = field(default_factory=lambda: ["get_weather"])
     # eval 时可替换 tool 实现
-    tool_map: dict[str, callable] = field(default_factory=dict)
+    tool_map: dict[str, ToolFunc] = field(default_factory=dict)
     # tool 执行过程中可修改的状态
     tool_call_count: int = 0
     last_tool_result: str = ""
@@ -81,17 +85,15 @@ def get_tools(ctx: RunContext[AgentDeps]) -> FunctionToolset:
 
 # ---- 4. history_processor：每次调 LLM 前修改消息 ----
 
-def inject_context_processor(messages):
+def inject_context_processor(messages: list[ModelMessage]) -> list[ModelMessage]:
     """在发给 LLM 之前，可以修改消息列表"""
-    # 示例：在最后一个 ModelRequest 中注入额外上下文
-    # 这里只做记录，证明 processor 被调用了
     print(f"[history_processor] 消息数量: {len(messages)}")
     return messages
 
 
 # ---- 5. 创建 Agent ----
 
-def create_agent(model=None) -> Agent:
+def create_agent(model: Model | None = None) -> Agent:
     """工厂函数，eval 时可传入 mock model"""
     if model is None:
         client = AsyncAzureOpenAI(
