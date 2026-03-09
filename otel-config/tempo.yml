@@ -11,6 +11,11 @@ distributor:
         grpc:
           endpoint: 0.0.0.0:4317
 
+overrides:
+  defaults:
+    ingestion:
+      max_attribute_bytes: 2000000
+
 ingester:
   lifecycler:
     ring:

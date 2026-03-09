@@ -11,7 +11,7 @@ services:
       - loki
 
   tempo:
-    image: grafana/tempo:2.7.2
+    image: grafana/tempo:2.8.0
     volumes:
       - ./otel-config/tempo.yml:/etc/tempo.yaml
       - tempo-data:/var/tempo
