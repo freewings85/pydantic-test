@@ -1,6 +1,6 @@
 services:
   otel-collector:
-    image: otel/opentelemetry-collector-contrib:latest
+    image: otel/opentelemetry-collector-contrib:0.147.0
     volumes:
       - ./otel-config/otel-collector.yml:/etc/otelcol-contrib/config.yaml
     ports:
@@ -20,7 +20,7 @@ services:
     command: ["-config.file=/etc/tempo.yaml"]
 
   loki:
-    image: grafana/loki:latest
+    image: grafana/loki:3.6.7
     user: "0"
     volumes:
       - ./otel-config/loki.yml:/etc/loki/local-config.yaml
@@ -28,7 +28,7 @@ services:
     command: ["-config.file=/etc/loki/local-config.yaml"]
 
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:12.4.0
     ports:
       - "3000:3000"
     volumes:
